@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ParkingLot.Models.Parking>
+
+@{
+    ViewData["Title"] = "Parking";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AllSpots)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FreeSpots)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfFloors)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AllSpots)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FreeSpots)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfFloors)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ParkingId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ParkingId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ParkingId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
