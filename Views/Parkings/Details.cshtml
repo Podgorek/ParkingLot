@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Floors Description</h1>
 
 <div>
     <h4>Parking</h4>
@@ -23,6 +23,40 @@
             @Html.DisplayFor(model => model.FreeSpots)
         </dd>
     </dl>
+
+    <h4> Floors</h4>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Floor Number
+                </th>
+                <th>
+                    Occupied Spots
+                </th>
+                <th>
+                    Total Spots
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var floor in Model.Floors)
+            {
+                <tr>
+                    <td>
+                        @floor.FloorLevel
+                    </td>
+                    <td>
+                        @floor.OccupiedSpotsCount
+                    </td>
+                    <td>
+                        @floor.TotalSpots
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.ParkingId">Edit</a> |

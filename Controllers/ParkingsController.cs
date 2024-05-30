@@ -32,15 +32,22 @@ namespace ParkingLot.Controllers
             {
                 return NotFound();
             }
-
             var parking = await _context.Parkings
-                .FirstOrDefaultAsync(m => m.ParkingId == id);
+                .FirstOrDefaultAsync(p => p.ParkingId == id);
+            var viewModel = new Parking
+            {
+                ParkingId = parking.ParkingId,
+                AllSpots = parking.AllSpots,
+                FreeSpots = parking.FreeSpots,
+                NumberOfFloors = parking.NumberOfFloors,
+                Floors = _context.Floors.Where(f => f.ParkingId == parking.ParkingId).ToList()
+            };
             if (parking == null)
             {
                 return NotFound();
             }
 
-            return View(parking);
+            return View(viewModel);
         }
 
         // GET: Parkings/Create
@@ -54,11 +61,24 @@ namespace ParkingLot.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ParkingId,NumberOfFloors,AllSpots,FreeSpots")] Parking parking)
+        public async Task<IActionResult> Create([Bind("ParkingId,NumberOfFloors,AllSpots")] Parking parking)
         {
             if (ModelState.IsValid)
             {
+                parking.FreeSpots = parking.AllSpots;
                 _context.Add(parking);
+                _context.SaveChanges();
+                int spotsOnFloor = parking.AllSpots / parking.NumberOfFloors;
+                for (int i = 0; i < parking.NumberOfFloors; i++)
+                {
+                    Floor newFloor = new Floor(parking.ParkingId, i, spotsOnFloor);
+                    _context.Floors.Add(newFloor);
+                    await _context.SaveChangesAsync();
+                    for(int j = 0; j < spotsOnFloor; j++)
+                    {
+                        _context.Spots.Add(new Spot(newFloor.FloorId));
+                    }
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

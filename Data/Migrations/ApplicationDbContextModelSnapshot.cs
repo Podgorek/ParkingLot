@@ -241,6 +241,9 @@ namespace ParkingLot.Data.Migrations
                     b.Property<int>("ParkingId")
                         .HasColumnType("int");
 
+                    b.Property<int>("TotalSpots")
+                        .HasColumnType("int");
+
                     b.HasKey("FloorId");
 
                     b.HasIndex("ParkingId");
@@ -272,11 +275,11 @@ namespace ParkingLot.Data.Migrations
 
             modelBuilder.Entity("ParkingLot.Models.Spot", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SpotId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SpotId"));
 
                     b.Property<int>("FloorId")
                         .HasColumnType("int");
@@ -284,7 +287,7 @@ namespace ParkingLot.Data.Migrations
                     b.Property<bool>("IsOccupied")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.HasKey("SpotId");
 
                     b.HasIndex("FloorId");
 
@@ -314,6 +317,28 @@ namespace ParkingLot.Data.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("ParkingLot.Models.Vehicle", b =>
+                {
+                    b.Property<int>("VehicleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VehicleId"));
+
+                    b.Property<int>("SpotId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("VehicleModel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("VehicleId");
+
+                    b.HasIndex("SpotId")
+                        .IsUnique();
+
+                    b.ToTable("Vehicles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -387,6 +412,15 @@ namespace ParkingLot.Data.Migrations
                     b.Navigation("Floor");
                 });
 
+            modelBuilder.Entity("ParkingLot.Models.Vehicle", b =>
+                {
+                    b.HasOne("ParkingLot.Models.Spot", null)
+                        .WithOne("Vehicle")
+                        .HasForeignKey("ParkingLot.Models.Vehicle", "SpotId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ParkingLot.Models.Floor", b =>
                 {
                     b.Navigation("Spots");
@@ -395,6 +429,11 @@ namespace ParkingLot.Data.Migrations
             modelBuilder.Entity("ParkingLot.Models.Parking", b =>
                 {
                     b.Navigation("Floors");
+                });
+
+            modelBuilder.Entity("ParkingLot.Models.Spot", b =>
+                {
+                    b.Navigation("Vehicle");
                 });
 #pragma warning restore 612, 618
         }
