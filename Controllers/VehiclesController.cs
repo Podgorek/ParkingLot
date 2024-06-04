@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,17 @@ namespace ParkingLot.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
+            List<ExpandoObject> vehicleDetails = new List<ExpandoObject>();
+            foreach(var vehicle in _context.Vehicles)
+            {
+                dynamic vehicleDetail = new ExpandoObject();
+                vehicleDetail.Model = vehicle.VehicleModel;
+                var floor = _context.Floors.Find(_context.Spots.Find(vehicle.SpotId).FloorId);
+                vehicleDetail.Floor = floor.FloorLevel;
+                vehicleDetail.Parking = floor.ParkingId;
+                vehicleDetails.Add(vehicleDetail);
+            }
+            ViewBag.VehicleDetails = vehicleDetails;
             return View(await _context.Vehicles.ToListAsync());
         }
 
@@ -185,6 +197,12 @@ namespace ParkingLot.Controllers
             var vehicle = await _context.Vehicles.FindAsync(id);
             if (vehicle != null)
             {
+                var spot = _context.Spots.Find(vehicle.SpotId);
+                spot.IsOccupied = false;
+                var floor = _context.Floors.Find(spot.FloorId);
+                floor.OccupiedSpotsCount--;
+                var parking = _context.Parkings.Find(floor.ParkingId);
+                parking.FreeSpots++;
                 _context.Vehicles.Remove(vehicle);
             }
 

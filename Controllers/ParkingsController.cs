@@ -34,6 +34,10 @@ namespace ParkingLot.Controllers
             }
             var parking = await _context.Parkings
                 .FirstOrDefaultAsync(p => p.ParkingId == id);
+            if (parking == null)
+            {
+                return NotFound();
+            }
             var viewModel = new Parking
             {
                 ParkingId = parking.ParkingId,
@@ -42,11 +46,6 @@ namespace ParkingLot.Controllers
                 NumberOfFloors = parking.NumberOfFloors,
                 Floors = _context.Floors.Where(f => f.ParkingId == parking.ParkingId).ToList()
             };
-            if (parking == null)
-            {
-                return NotFound();
-            }
-
             return View(viewModel);
         }
 
