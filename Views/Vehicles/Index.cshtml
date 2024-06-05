@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.VehicleModel)
+                Vehicle Model
             </th>
             <th></th>
         </tr>
@@ -25,7 +25,6 @@
                 @Html.DisplayFor(modelItem => item.VehicleModel)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.VehicleId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.VehicleId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.VehicleId">Delete</a>
             </td>

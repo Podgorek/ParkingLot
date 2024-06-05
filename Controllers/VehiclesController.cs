@@ -13,11 +13,6 @@ namespace ParkingLot.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        private string _parkingName;
-        private string _vehicleName;
-        private int _vehicleId;
-        private Vehicle _vehicle;
-
         public VehiclesController(ApplicationDbContext context)
         {
             _context = context;
@@ -26,33 +21,45 @@ namespace ParkingLot.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
-/*            List<ExpandoObject> vehicleDetails = new();
-            foreach (var vehicle in _context.Vehicles)
-            {
-                dynamic vehicleDetail = new ExpandoObject();
-                vehicleDetail.Model = vehicle.VehicleModel;
-                var floor = _context.Floors.Find(_context.Spots.Find(vehicle.SpotId).FloorId);
-                vehicleDetail.Floor = floor.FloorLevel;
-                vehicleDetail.Parking = floor.ParkingId;
-                vehicleDetails.Add(vehicleDetail);
-            }
-            ViewBag.VehicleDetails = vehicleDetails;
- */           return View(await _context.Vehicles.ToListAsync());
+            return View(await _context.Vehicles.ToListAsync());
         }
 
         // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            const string FLOOR_EXCEPTION = "FloorNotFound";
+            const string SPOT_EXCEPTION = "SpotNotFound";
+
             if (id == null)
             {
                 return NotFound();
             }
 
+
             var vehicle = await _context.Vehicles
                 .FirstOrDefaultAsync(m => m.VehicleId == id);
+
+
             if (vehicle == null)
             {
                 return NotFound();
+            }
+
+            var spot = await _context.Spots
+                 .FirstOrDefaultAsync(s => s.SpotId == vehicle.SpotId);
+
+            if (spot == null)
+            {
+                ViewBag.SpotNum = SPOT_EXCEPTION;
+                ViewBag.FloorLevel = FLOOR_EXCEPTION;
+            }
+            else
+            {
+                ViewBag.SpotNum = spot.SpotNumber;
+
+                var floor = await _context.Floors
+                    .FirstOrDefaultAsync(f => f.FloorId == spot.FloorId);
+                ViewBag.FloorLevel = floor == null ? ViewBag.FloorLevel = FLOOR_EXCEPTION : floor.FloorLevel;
             }
 
             return View(vehicle);
@@ -68,19 +75,9 @@ namespace ParkingLot.Controllers
                     Value = p.ParkingId.ToString(),
                     Text = p.ParkingName
                 }).ToList();
-            Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\nelo");
+
             ViewBag.ParkingName = parkingNames;
 
-           /* var spotsId = _context.Spots
-                .Where(s => s.IsOccupied == false)
-                .Select(s => new SelectListItem
-                {
-                    Value = s.SpotId.ToString(),
-                    Text = s.SpotNumber.ToString()
-                })
-                .ToList();
-
-            ViewBag.SpotId = spotsId;*/
 
             return View();
         }
@@ -90,14 +87,15 @@ namespace ParkingLot.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ParkingName,VehicleId,VehicleModel")] Vehicle vehicle)
+        public async Task<IActionResult> Create([Bind("VehicleId,VehicleModel,ParkingName")] VehicleTemp vehicle)
         {
+
             _context.VehicleToCreate.Add(new VehicleTemp
             {
-                VehicleId = vehicle.VehicleId,
                 VehicleModel = vehicle.VehicleModel,
                 ParkingName = vehicle.ParkingName
             });
+
 
             if (ModelState.IsValid)
             {
@@ -107,56 +105,7 @@ namespace ParkingLot.Controllers
             return View();
         }
 
-        // GET: Vehicles/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var vehicle = await _context.Vehicles.FindAsync(id);
-            if (vehicle == null)
-            {
-                return NotFound();
-            }
-            return View(vehicle);
-        }
-
-        // POST: Vehicles/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VehicleId,SpotId,VehicleModel")] Vehicle vehicle)
-        {
-            if (id != vehicle.VehicleId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(vehicle);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!VehicleExists(vehicle.VehicleId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(vehicle);
-        }
 
         // GET: Vehicles/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -182,6 +131,7 @@ namespace ParkingLot.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var vehicle = await _context.Vehicles.FindAsync(id);
+
             if (vehicle != null)
             {
                 var spot = _context.Spots.Find(vehicle.SpotId);
@@ -206,19 +156,18 @@ namespace ParkingLot.Controllers
         [HttpGet]
         public async Task<IActionResult> SpotChoose()
         {
-            var spot = await _context.Spots.FindAsync(_parkingName);
-            Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\\n\nn\n\n\n\\n\nelo elo");
-            var spotsId = _context.Spots
-                .Where(s => s.IsOccupied == false)
+            
+            var spotsId = await _context.Spots
+                .Where(s => s.IsOccupied == false && Convert.ToInt32(_context.VehicleToCreate.OrderBy(i => i.VehicleId).LastOrDefault().ParkingName) == s.ParkingId)
                 .Select(s => new SelectListItem
                 {
                     Value = s.SpotId.ToString(),
                     Text = s.SpotNumber.ToString()
                 })
-                .ToList();
+                .ToListAsync();
 
             ViewBag.SpotId = spotsId;
-            
+
             return View();
         }
         // POST: Vehicles/SpotChoose/2
@@ -257,16 +206,16 @@ namespace ParkingLot.Controllers
             floor.OccupiedSpotsCount++;
             spot.IsOccupied = true;
 
-            
 
+            var parkingName = _context.Parkings.Find(Convert.ToInt32(_context.VehicleToCreate.OrderBy(i => i.VehicleId).LastOrDefault().ParkingName));
             var vehicle = new Vehicle
             {
                 SpotId = SpotId,
-                ParkingName = _context.VehicleToCreate.OrderBy(i => i.VehicleId).LastOrDefault().ParkingName,
+                ParkingName = parkingName.ParkingName,
                 VehicleModel = _context.VehicleToCreate.OrderBy(i => i.VehicleId).LastOrDefault().VehicleModel,
             };
 
-            
+
 
             ViewBag.SpotId = _context.Spots.Select(s => s.SpotId);
 
@@ -277,9 +226,6 @@ namespace ParkingLot.Controllers
                 _context.Update(floor);
                 _context.Update(spot);
                 await _context.SaveChangesAsync();
-                _vehicleName = string.Empty;
-                _parkingName = string.Empty;
-                _vehicle = null;
                 return RedirectToAction(nameof(Index));
             }
 

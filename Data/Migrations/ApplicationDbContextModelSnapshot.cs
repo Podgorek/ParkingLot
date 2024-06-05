@@ -363,6 +363,7 @@ namespace ParkingLot.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VehicleId"));
 
                     b.Property<string>("ParkingName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VehicleModel")

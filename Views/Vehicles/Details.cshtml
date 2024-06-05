@@ -11,14 +11,37 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VehicleModel)
+            Model
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.VehicleModel)
         </dd>
     </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Parking Name
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ParkingName)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Spot number
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.SpotNum
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Floor level
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.FloorLevel
+        </dd>
+    </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.VehicleId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

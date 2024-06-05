@@ -5,8 +5,16 @@
       "PackagePath": "staticwebassets\\ParkingLot.bundle.scp.css"
     },
     {
+      "Id": "D:\\VisualStudioProjects\\ParkingLot\\wwwroot\\D18.ico",
+      "PackagePath": "staticwebassets\\D18.ico"
+    },
+    {
       "Id": "D:\\VisualStudioProjects\\ParkingLot\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "D:\\VisualStudioProjects\\ParkingLot\\wwwroot\\disabledIco.ico",
+      "PackagePath": "staticwebassets\\disabledIco.ico"
     },
     {
       "Id": "D:\\VisualStudioProjects\\ParkingLot\\wwwroot\\favicon.ico",

@@ -19,6 +19,7 @@ namespace ParkingLot.Controllers
             _context = context;
         }
 
+
         // GET: Parkings
         public async Task<IActionResult> Index()
         {
@@ -56,8 +57,7 @@ namespace ParkingLot.Controllers
         }
 
         // POST: Parkings/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ParkingId,NumberOfFloors,AllSpots,ParkingName")] Parking parking)
@@ -81,6 +81,8 @@ namespace ParkingLot.Controllers
                     {
                         var spot = new Spot(newFloor.FloorId);
                         spot.SpotNumber = spotNum;
+                        spot.ParkingId = parking.ParkingId;
+
                         _context.Spots.Add(spot);
                         spotNum++;
                     }
