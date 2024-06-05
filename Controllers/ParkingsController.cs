@@ -60,7 +60,7 @@ namespace ParkingLot.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ParkingId,NumberOfFloors,AllSpots")] Parking parking)
+        public async Task<IActionResult> Create([Bind("ParkingId,NumberOfFloors,AllSpots,ParkingName")] Parking parking)
         {
             if (ModelState.IsValid)
             {
@@ -68,14 +68,21 @@ namespace ParkingLot.Controllers
                 _context.Add(parking);
                 _context.SaveChanges();
                 int spotsOnFloor = parking.AllSpots / parking.NumberOfFloors;
+
+                int spotNum = 0;
+
                 for (int i = 0; i < parking.NumberOfFloors; i++)
                 {
-                    Floor newFloor = new Floor(parking.ParkingId, i, spotsOnFloor);
+                    var newFloor = new Floor(parking.ParkingId, i, spotsOnFloor);
                     _context.Floors.Add(newFloor);
                     await _context.SaveChangesAsync();
+
                     for(int j = 0; j < spotsOnFloor; j++)
                     {
-                        _context.Spots.Add(new Spot(newFloor.FloorId));
+                        var spot = new Spot(newFloor.FloorId);
+                        spot.SpotNumber = spotNum;
+                        _context.Spots.Add(spot);
+                        spotNum++;
                     }
                 }
                 await _context.SaveChangesAsync();

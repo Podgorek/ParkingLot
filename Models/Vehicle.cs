@@ -1,5 +1,6 @@
 ﻿        using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ParkingLot.Models
 {
@@ -9,9 +10,13 @@ namespace ParkingLot.Models
         public int VehicleId { get; set; }
 
 
-        [ForeignKey("SpotId")]
+        [Display(Name = "Spot ID")]
+        [AllowNull]
         public int SpotId { get; set; }
+        //[Required]
         public string? VehicleModel { get; set; }
+        [Display(Name = "Parking Name")]
+        public string? ParkingName { get; set; }
 
 
 

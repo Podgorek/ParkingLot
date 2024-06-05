@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\admin\\source\\repos\\ParkingLot\\ParkingLot.csproj": {}
+    "D:\\VisualStudioProjects\\ParkingLot\\ParkingLot.csproj": {}
   },
   "projects": {
-    "C:\\Users\\admin\\source\\repos\\ParkingLot\\ParkingLot.csproj": {
+    "D:\\VisualStudioProjects\\ParkingLot\\ParkingLot.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\admin\\source\\repos\\ParkingLot\\ParkingLot.csproj",
+        "projectUniqueName": "D:\\VisualStudioProjects\\ParkingLot\\ParkingLot.csproj",
         "projectName": "ParkingLot",
-        "projectPath": "C:\\Users\\admin\\source\\repos\\ParkingLot\\ParkingLot.csproj",
-        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\admin\\source\\repos\\ParkingLot\\obj\\",
+        "projectPath": "D:\\VisualStudioProjects\\ParkingLot\\ParkingLot.csproj",
+        "packagesPath": "C:\\Users\\Msi\\.nuget\\packages\\",
+        "outputPath": "D:\\VisualStudioProjects\\ParkingLot\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Msi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -89,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.206/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

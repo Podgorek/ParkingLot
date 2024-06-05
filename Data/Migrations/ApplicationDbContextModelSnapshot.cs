@@ -268,6 +268,10 @@ namespace ParkingLot.Data.Migrations
                     b.Property<int>("NumberOfFloors")
                         .HasColumnType("int");
 
+                    b.Property<string>("ParkingName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ParkingId");
 
                     b.ToTable("Parkings");
@@ -286,6 +290,12 @@ namespace ParkingLot.Data.Migrations
 
                     b.Property<bool>("IsOccupied")
                         .HasColumnType("bit");
+
+                    b.Property<int>("ParkingId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SpotNumber")
+                        .HasColumnType("int");
 
                     b.HasKey("SpotId");
 
@@ -327,6 +337,9 @@ namespace ParkingLot.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VehicleId"));
 
+                    b.Property<string>("ParkingName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SpotId")
                         .HasColumnType("int");
 
@@ -339,6 +352,25 @@ namespace ParkingLot.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Vehicles");
+                });
+
+            modelBuilder.Entity("ParkingLot.Models.VehicleTemp", b =>
+                {
+                    b.Property<int>("VehicleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VehicleId"));
+
+                    b.Property<string>("ParkingName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleModel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("VehicleId");
+
+                    b.ToTable("VehicleToCreate");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

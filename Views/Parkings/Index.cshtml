@@ -7,26 +7,31 @@
 <h1>Parking</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create new parking</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.AllSpots)
+                Parking Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FreeSpots)
+                Spots
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NumberOfFloors)
+                Free spots
             </th>
-            <th></th>
+            <th>
+                Floors
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParkingName)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AllSpots)
             </td>
@@ -37,9 +42,9 @@
                 @Html.DisplayFor(modelItem => item.NumberOfFloors)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ParkingId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ParkingId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ParkingId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ParkingId">Edit parking</a> |
+                <a asp-action="Details" asp-route-id="@item.ParkingId">Show details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ParkingId">Delete parking</a>
             </td>
         </tr>
 }

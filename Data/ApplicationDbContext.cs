@@ -15,6 +15,6 @@ namespace ParkingLot.Data
         public DbSet<Spot> Spots { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
-        
+        public DbSet<VehicleTemp> VehicleToCreate { get; set; }
     }
 }

@@ -7,9 +7,10 @@ namespace ParkingLot.Models
     {
         [Key]
         public int SpotId { get; set; }
+        [Required]
+        public int SpotNumber { get; set; }
+        public int ParkingId { get; set; }
         public int FloorId {  get; set; }
-
-        [ForeignKey("FloorId")]
         public Floor? Floor { get; set; }
         public bool IsOccupied { get; set; }
         public Vehicle? Vehicle { get; set; }

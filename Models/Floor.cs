@@ -11,7 +11,7 @@ namespace ParkingLot.Models
         public int FloorLevel { get; set; }
         public int OccupiedSpotsCount { get; set; }
         public int TotalSpots {  get; set; }
-        public List<Spot> Spots { get; set; } = new List<Spot>();
+        public List<Spot> Spots { get; set; } = new ();
         public Floor(int parkingId, int floorLevel, int totalSpots)
         {
             ParkingId = parkingId;

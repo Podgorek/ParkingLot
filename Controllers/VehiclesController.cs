@@ -1,19 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ParkingLot.Data;
 using ParkingLot.Models;
+using System.Text.Json;
+using System.Text;
+using System.Collections;
 
 namespace ParkingLot.Controllers
 {
     public class VehiclesController : Controller
     {
         private readonly ApplicationDbContext _context;
+
+        private string _parkingName;
+        private string _vehicleName;
+        private int _vehicleId;
+        private Vehicle _vehicle;
 
         public VehiclesController(ApplicationDbContext context)
         {
@@ -23,8 +26,8 @@ namespace ParkingLot.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
-            List<ExpandoObject> vehicleDetails = new List<ExpandoObject>();
-            foreach(var vehicle in _context.Vehicles)
+/*            List<ExpandoObject> vehicleDetails = new();
+            foreach (var vehicle in _context.Vehicles)
             {
                 dynamic vehicleDetail = new ExpandoObject();
                 vehicleDetail.Model = vehicle.VehicleModel;
@@ -34,7 +37,7 @@ namespace ParkingLot.Controllers
                 vehicleDetails.Add(vehicleDetail);
             }
             ViewBag.VehicleDetails = vehicleDetails;
-            return View(await _context.Vehicles.ToListAsync());
+ */           return View(await _context.Vehicles.ToListAsync());
         }
 
         // GET: Vehicles/Details/5
@@ -58,14 +61,27 @@ namespace ParkingLot.Controllers
         // GET: Vehicles/Create
         public IActionResult Create()
         {
-            ViewBag.SpotId = _context.Spots
+            var parkingNames = _context.Parkings
+                .Where(p => p.FreeSpots > 0)
+                .Select(p => new SelectListItem
+                {
+                    Value = p.ParkingId.ToString(),
+                    Text = p.ParkingName
+                }).ToList();
+            Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\nelo");
+            ViewBag.ParkingName = parkingNames;
+
+           /* var spotsId = _context.Spots
                 .Where(s => s.IsOccupied == false)
                 .Select(s => new SelectListItem
                 {
                     Value = s.SpotId.ToString(),
-                    Text = s.SpotId.ToString()
+                    Text = s.SpotNumber.ToString()
                 })
                 .ToList();
+
+            ViewBag.SpotId = spotsId;*/
+
             return View();
         }
 
@@ -74,48 +90,19 @@ namespace ParkingLot.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VehicleId,SpotId,VehicleModel")] Vehicle vehicle)
+        public async Task<IActionResult> Create([Bind("ParkingName,VehicleId,VehicleModel")] Vehicle vehicle)
         {
-            var spot = _context.Spots.Find(vehicle.SpotId);
-
-            if(spot == null)
+            _context.VehicleToCreate.Add(new VehicleTemp
             {
-                return NotFound();
-            }
-
-            if (spot.IsOccupied)
-            {
-                return NotFound();
-            }
-
-            var floor = _context.Floors.Find(spot.FloorId);
-
-            if (floor == null)
-            {
-                return NotFound();
-            }
-
-            var parking = _context.Parkings.Find(floor.ParkingId);
-
-            if (parking == null)
-            {
-                return NotFound();
-            }
-
-            parking.FreeSpots--;
-            floor.OccupiedSpotsCount++;
-            spot.IsOccupied = true;
-
-            ViewBag.SpotId = _context.Spots.Select(s => s.SpotId);
+                VehicleId = vehicle.VehicleId,
+                VehicleModel = vehicle.VehicleModel,
+                ParkingName = vehicle.ParkingName
+            });
 
             if (ModelState.IsValid)
             {
-                _context.Add(vehicle);
-                _context.Update(parking);
-                _context.Update(floor);
-                _context.Update(spot);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(SpotChoose));
             }
             return View();
         }
@@ -214,5 +201,90 @@ namespace ParkingLot.Controllers
         {
             return _context.Vehicles.Any(e => e.VehicleId == id);
         }
+
+        // GET: Vehicles/SpotChoose/1
+        [HttpGet]
+        public async Task<IActionResult> SpotChoose()
+        {
+            var spot = await _context.Spots.FindAsync(_parkingName);
+            Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\\n\nn\n\n\n\\n\nelo elo");
+            var spotsId = _context.Spots
+                .Where(s => s.IsOccupied == false)
+                .Select(s => new SelectListItem
+                {
+                    Value = s.SpotId.ToString(),
+                    Text = s.SpotNumber.ToString()
+                })
+                .ToList();
+
+            ViewBag.SpotId = spotsId;
+            
+            return View();
+        }
+        // POST: Vehicles/SpotChoose/2
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SpotChoose(int SpotId)
+        {
+            Console.WriteLine(SpotId);
+            var spot = await _context.Spots.FindAsync(SpotId);
+
+            if (spot == null)
+            {
+                return NotFound();
+            }
+
+            if (spot.IsOccupied)
+            {
+                return NotFound();
+            }
+
+            var floor = _context.Floors.Find(spot.FloorId);
+
+            if (floor == null)
+            {
+                return NotFound();
+            }
+
+            var parking = _context.Parkings.Find(floor.ParkingId);
+
+            if (parking == null)
+            {
+                return NotFound();
+            }
+
+            parking.FreeSpots--;
+            floor.OccupiedSpotsCount++;
+            spot.IsOccupied = true;
+
+            
+
+            var vehicle = new Vehicle
+            {
+                SpotId = SpotId,
+                ParkingName = _context.VehicleToCreate.OrderBy(i => i.VehicleId).LastOrDefault().ParkingName,
+                VehicleModel = _context.VehicleToCreate.OrderBy(i => i.VehicleId).LastOrDefault().VehicleModel,
+            };
+
+            
+
+            ViewBag.SpotId = _context.Spots.Select(s => s.SpotId);
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(vehicle);
+                _context.Update(parking);
+                _context.Update(floor);
+                _context.Update(spot);
+                await _context.SaveChangesAsync();
+                _vehicleName = string.Empty;
+                _parkingName = string.Empty;
+                _vehicle = null;
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View();
+        }
     }
+
 }

@@ -1,0 +1,33 @@
+﻿@model ParkingLot.Models.Vehicle
+
+@{
+    ViewData["Title"] = "SpotChoose";
+}
+
+<h1>SpotChoose</h1>
+
+<h4>Vehicle</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SpotChoose" asp-controller="Vehicles">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SpotId" class="control-label">Spot ID</label>
+                <select asp-for="SpotId" class="form-control" asp-items="ViewBag.SpotId"></select>
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="SpotId" asp-for="@Model.SpotId" />
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
