@@ -2,7 +2,7 @@
 
 namespace ParkingLot.Models
 {
-    public class Parking
+    public class Parking : IModel
     {
         [Key]
         public int ParkingId { get; set; }

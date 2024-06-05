@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace ParkingLot.Models
 {
-    public class Vehicle
+    public class Vehicle : IModel
     {
         [Key]
         public int VehicleId { get; set; }

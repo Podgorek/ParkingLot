@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ParkingLot.Models
 {
-    public class Spot
+    public class Spot : IModel
     {
         [Key]
         public int SpotId { get; set; }

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
+using ParkingLot.ApiManager;
 using ParkingLot.Data;
 using ParkingLot.Models;
 
@@ -13,41 +15,38 @@ namespace ParkingLot.Controllers
     public class ParkingsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ApiClient _client;
+        const string URL = "https://localhost:7284/api/Parkings";
 
         public ParkingsController(ApplicationDbContext context)
         {
             _context = context;
+            _client = new ApiClient();
         }
 
 
         // GET: Parkings
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Parkings.ToListAsync());
+            string url = $"{URL}/Index";
+            
+            return View(await _client.GetAsyncIEnumerable<List<Parking>>(url));
         }
 
         // GET: Parkings/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+
+            string url = $"{URL}/Details/{id}";
+
+            var result = await _client.GetAsync<Parking>(url);
+
+            if (result == null)
             {
                 return NotFound();
             }
-            var parking = await _context.Parkings
-                .FirstOrDefaultAsync(p => p.ParkingId == id);
-            if (parking == null)
-            {
-                return NotFound();
-            }
-            var viewModel = new Parking
-            {
-                ParkingId = parking.ParkingId,
-                AllSpots = parking.AllSpots,
-                FreeSpots = parking.FreeSpots,
-                NumberOfFloors = parking.NumberOfFloors,
-                Floors = _context.Floors.Where(f => f.ParkingId == parking.ParkingId).ToList()
-            };
-            return View(viewModel);
+
+            return View(result);
         }
 
         // GET: Parkings/Create
@@ -152,6 +151,8 @@ namespace ParkingLot.Controllers
                 return NotFound();
             }
 
+
+
             var parking = await _context.Parkings
                 .FirstOrDefaultAsync(m => m.ParkingId == id);
             if (parking == null)
@@ -167,14 +168,17 @@ namespace ParkingLot.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var parking = await _context.Parkings.FindAsync(id);
-            if (parking != null)
-            {
-                _context.Parkings.Remove(parking);
-            }
+            string urlDelete = $"https://localhost:7284/api/Parkings/remove/{id}";
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var responseDelete = await _client.DeleteAsync<ResponseDelete>(urlDelete);
+
+            if (responseDelete == null)
+            {
+                var responseError = await _client.DeleteAsync<ErrorMessage>(urlDelete);
+                return View(responseError);
+            }
+            
+            return responseDelete.Success ? RedirectToAction(nameof(Index)) : View();
         }
 
         private bool ParkingExists(int id)
