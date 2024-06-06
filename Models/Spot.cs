@@ -19,5 +19,6 @@ namespace ParkingLot.Models
             FloorId = floorId;
             IsOccupied = false;
         }
+        
     }
 }

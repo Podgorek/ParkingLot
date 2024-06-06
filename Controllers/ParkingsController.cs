@@ -59,43 +59,27 @@ namespace ParkingLot.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult<Parking>> Create([Bind("ParkingId,NumberOfFloors,AllSpots,ParkingName")] Parking parking)
+        public async Task<IActionResult> Create([Bind("ParkingId,NumberOfFloors,AllSpots,ParkingName")] Parking parking)
         {
-           
             if (ModelState.IsValid)
             {
+                string url = $"{URL}/Create";
                 parking.FreeSpots = parking.AllSpots;
-                _context.Add(parking);
-                _context.SaveChanges();
-                int spotsOnFloor = parking.AllSpots / parking.NumberOfFloors;
 
-                int spotNum = 0;
+                var createdParking = await _client.PostAsyncDeserialized<Parking>(url, parking);
 
-                for (int i = 0; i < parking.NumberOfFloors; i++)
-                {
-                    var newFloor = new Floor(parking.ParkingId, i, spotsOnFloor);
-                    _context.Floors.Add(newFloor);
-                    await _context.SaveChangesAsync();
-
-                    for(int j = 0; j < spotsOnFloor; j++)
-                    {
-                        var spot = new Spot(newFloor.FloorId);
-                        spot.SpotNumber = spotNum;
-                        spot.ParkingId = parking.ParkingId;
-
-                        _context.Spots.Add(spot);
-                        spotNum++;
-                    }
-                }
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
+                
+                
             }
+
             return View(parking);
         }
 
 
-        
+
 
         // GET: Parkings/Delete/5
         public async Task<IActionResult> Delete(int? id)

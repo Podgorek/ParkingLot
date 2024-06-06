@@ -9,11 +9,9 @@ namespace ParkingLot.Models
         [Key]
         public int VehicleId { get; set; }
 
-
         [Display(Name = "Spot ID")]
         [AllowNull]
         public int SpotId { get; set; }
-        //[Required]
         public string? VehicleModel { get; set; }
         [Display(Name = "Parking Name")]
         public string? ParkingName { get; set; }

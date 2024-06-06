@@ -13,7 +13,7 @@ namespace ParkingLot.ApiManager
             _client = new HttpClient();
         }
 
-        public async Task<T> PostAsyncDeserialized<T>(string url, object data) where T : IModel
+        public async Task<T> PostAsyncDeserialized<T>(string url, object data)
         {
             string jsonContent = JsonConvert.SerializeObject(data);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
@@ -24,7 +24,6 @@ namespace ParkingLot.ApiManager
                 string responseBody = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<T>(responseBody);
             }
-
             else return default(T);
         }
 

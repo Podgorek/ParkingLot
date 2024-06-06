@@ -6,22 +6,26 @@ using ParkingLot.Models;
 using System.Text.Json;
 using System.Text;
 using System.Collections;
+using ParkingLot.ApiManager;
 
 namespace ParkingLot.Controllers
 {
     public class VehiclesController : Controller
     {
         private readonly ApplicationDbContext _context;
-
+        private readonly ApiClient _client;
+        const string URL = "https://localhost:7284/api/Vehicles";
         public VehiclesController(ApplicationDbContext context)
         {
             _context = context;
+            _client = new ApiClient();
         }
 
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Vehicles.ToListAsync());
+            string url = $"{URL}/Index";
+            return View("Index", await _client.GetAsyncIEnumerable<List<Vehicle>>(url));
         }
 
         // GET: Vehicles/SearchVehicle
