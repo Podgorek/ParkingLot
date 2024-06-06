@@ -50,43 +50,12 @@ namespace ParkingLot.Controllers
             return viewModel;
 
         }
-       /* [HttpPost("Create")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult<Parking>> Create(string parkingName, int allSpots, int numberOfFloors)
+       [HttpPost("Create")]
+       [ValidateAntiForgeryToken]
+        public async Task<ActionResult<Parking>> Create([FromBody]Parking parking)
         {
-            var parking = new Parking()
-            {
-                ParkingName = parkingName,
-                AllSpots = allSpots,
-                NumberOfFloors = numberOfFloors
-            };
-
-            parking.FreeSpots = parking.AllSpots;
-            _context.Add(parking);
-            _context.SaveChanges();
-            int spotsOnFloor = parking.AllSpots / parking.NumberOfFloors;
-
-            int spotNum = 0;
-
-            for (int i = 0; i < parking.NumberOfFloors; i++)
-            {
-                var newFloor = new Floor(parking.ParkingId, i, spotsOnFloor);
-                _context.Floors.Add(newFloor);
-                await _context.SaveChangesAsync();
-
-                for (int j = 0; j < spotsOnFloor; j++)
-                {
-                    var spot = new Spot(newFloor.FloorId);
-                    spot.SpotNumber = spotNum;
-                    spot.ParkingId = parking.ParkingId;
-
-                    _context.Spots.Add(spot);
-                    spotNum++;
-                }
-            }
-            await _context.SaveChangesAsync();
             return Ok(parking);
-        }*/
+        }
 
         [HttpDelete("remove/{id}")]
         public async Task<ActionResult<IModel>> DeleteConfirmed(int id)

@@ -11,7 +11,6 @@ namespace ParkingLot.Models
         public int SpotNumber { get; set; }
         public int ParkingId { get; set; }
         public int FloorId {  get; set; }
-        public Floor? Floor { get; set; }
         public bool IsOccupied { get; set; }
         public Vehicle? Vehicle { get; set; }
 

@@ -59,8 +59,9 @@ namespace ParkingLot.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ParkingId,NumberOfFloors,AllSpots,ParkingName")] Parking parking)
+        public async Task<ActionResult<Parking>> Create([Bind("ParkingId,NumberOfFloors,AllSpots,ParkingName")] Parking parking)
         {
+           
             if (ModelState.IsValid)
             {
                 parking.FreeSpots = parking.AllSpots;
@@ -87,6 +88,12 @@ namespace ParkingLot.Controllers
                     }
                 }
                 await _context.SaveChangesAsync();
+                var response = await _client.PostAsyncDeserialized<Parking>(URL + "/Create", parking);
+                if(response.ParkingId ==20)
+                {
+                    Console.WriteLine("chuj");
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(parking);

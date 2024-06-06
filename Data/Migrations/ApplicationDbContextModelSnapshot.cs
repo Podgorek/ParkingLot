@@ -436,13 +436,11 @@ namespace ParkingLot.Data.Migrations
 
             modelBuilder.Entity("ParkingLot.Models.Spot", b =>
                 {
-                    b.HasOne("ParkingLot.Models.Floor", "Floor")
+                    b.HasOne("ParkingLot.Models.Floor", null)
                         .WithMany("Spots")
                         .HasForeignKey("FloorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Floor");
                 });
 
             modelBuilder.Entity("ParkingLot.Models.Vehicle", b =>
