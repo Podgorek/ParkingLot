@@ -1050,3 +1050,7 @@ C:\Users\admin\Source\Repos\ParkingLotv3\obj\Debug\net8.0\refint\ParkingLot.dll
 C:\Users\admin\Source\Repos\ParkingLotv3\obj\Debug\net8.0\ParkingLot.pdb
 C:\Users\admin\Source\Repos\ParkingLotv3\obj\Debug\net8.0\ParkingLot.genruntimeconfig.cache
 C:\Users\admin\Source\Repos\ParkingLotv3\obj\Debug\net8.0\ref\ParkingLot.dll
+C:\Users\admin\source\repos\ParkingLotv3\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\admin\source\repos\ParkingLotv3\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\admin\source\repos\ParkingLotv3\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\admin\source\repos\ParkingLotv3\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
