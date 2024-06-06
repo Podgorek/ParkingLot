@@ -30,6 +30,20 @@ namespace ParkingLot.Controllers
             return View();
         }
 
+        // Post: Vehicles/Index/SortByModelAsc
+        public IActionResult SortByModelAsc()
+        {
+            var sortedVehicles = _context.Vehicles.OrderBy(v => v.VehicleModel).ToList();
+            return View("Index", sortedVehicles); 
+        }
+
+        // Post: Vehicles/Index/SortByModelAsc
+        public IActionResult SortByModelDesc()
+        {
+            var sortedVehicles = _context.Vehicles.OrderByDescending(v => v.VehicleModel).ToList();
+            return View("Index", sortedVehicles);
+        }
+
         // Post: Vehicles/SearchResult
         public async Task<IActionResult> SearchResult(string SearchPhrase)
         {
