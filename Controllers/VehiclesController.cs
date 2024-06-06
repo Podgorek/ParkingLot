@@ -24,6 +24,18 @@ namespace ParkingLot.Controllers
             return View(await _context.Vehicles.ToListAsync());
         }
 
+        // GET: Vehicles/SearchVehicle
+        public async Task<IActionResult> SearchVehicle()
+        {
+            return View();
+        }
+
+        // Post: Vehicles/SearchResult
+        public async Task<IActionResult> SearchResult(string SearchPhrase)
+        {
+            return View("Index", await _context.Vehicles.Where(v => v.VehicleModel.Contains(SearchPhrase)).ToListAsync());
+        }
+
         // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(int? id)
         {

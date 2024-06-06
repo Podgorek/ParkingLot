@@ -17,87 +17,87 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ParkingLot
 build_property.RootNamespace = ParkingLot
-build_property.ProjectDir = C:\Users\admin\source\repos\ParkingLot\
+build_property.ProjectDir = C:\Users\admin\source\repos\ParkingLotv3\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\admin\source\repos\ParkingLot
+build_property.MSBuildProjectDirectory = C:\Users\admin\source\repos\ParkingLotv3
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/admin/source/repos/ParkingLot/Areas/Identity/Pages/_ViewStart.cshtml]
+[C:/Users/admin/source/repos/ParkingLotv3/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/admin/source/repos/ParkingLot/Views/Home/Index.cshtml]
+[C:/Users/admin/source/repos/ParkingLotv3/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/admin/source/repos/ParkingLot/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/admin/source/repos/ParkingLot/Views/Parkings/Create.cshtml]
+[C:/Users/admin/source/repos/ParkingLotv3/Views/Parkings/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFya2luZ3NcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/admin/source/repos/ParkingLot/Views/Parkings/Delete.cshtml]
+[C:/Users/admin/source/repos/ParkingLotv3/Views/Parkings/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFya2luZ3NcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/admin/source/repos/ParkingLot/Views/Parkings/Details.cshtml]
+[C:/Users/admin/source/repos/ParkingLotv3/Views/Parkings/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFya2luZ3NcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/admin/source/repos/ParkingLot/Views/Parkings/Edit.cshtml]
+[C:/Users/admin/source/repos/ParkingLotv3/Views/Parkings/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFya2luZ3NcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/admin/source/repos/ParkingLot/Views/Parkings/Index.cshtml]
+[C:/Users/admin/source/repos/ParkingLotv3/Views/Parkings/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFya2luZ3NcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/admin/source/repos/ParkingLot/Views/Shared/Error.cshtml]
+[C:/Users/admin/source/repos/ParkingLotv3/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/admin/source/repos/ParkingLot/Views/Shared/_LoginPartial.cshtml]
+[C:/Users/admin/source/repos/ParkingLotv3/Views/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/admin/source/repos/ParkingLot/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/admin/source/repos/ParkingLotv3/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/admin/source/repos/ParkingLot/Views/Vehicles/Create.cshtml]
+[C:/Users/admin/source/repos/ParkingLotv3/Views/Vehicles/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVoaWNsZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/admin/source/repos/ParkingLot/Views/Vehicles/Delete.cshtml]
+[C:/Users/admin/source/repos/ParkingLotv3/Views/Vehicles/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVoaWNsZXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/admin/source/repos/ParkingLot/Views/Vehicles/Details.cshtml]
+[C:/Users/admin/source/repos/ParkingLotv3/Views/Vehicles/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVoaWNsZXNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/admin/source/repos/ParkingLot/Views/Vehicles/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVoaWNsZXNcRWRpdC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/admin/source/repos/ParkingLot/Views/Vehicles/Index.cshtml]
+[C:/Users/admin/source/repos/ParkingLotv3/Views/Vehicles/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVoaWNsZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/admin/source/repos/ParkingLot/Views/_ViewImports.cshtml]
+[C:/Users/admin/source/repos/ParkingLotv3/Views/Vehicles/SearchVehicle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVoaWNsZXNcU2VhcmNoVmVoaWNsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/source/repos/ParkingLotv3/Views/Vehicles/SpotChoose.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVoaWNsZXNcU3BvdENob29zZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/source/repos/ParkingLotv3/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/admin/source/repos/ParkingLot/Views/_ViewStart.cshtml]
+[C:/Users/admin/source/repos/ParkingLotv3/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/admin/source/repos/ParkingLot/Views/Shared/_Layout.cshtml]
+[C:/Users/admin/source/repos/ParkingLotv3/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-mjbripz374
